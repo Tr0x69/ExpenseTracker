@@ -1,0 +1,18 @@
+﻿@model ExpenseTracker.Models.Data.Applicationuser
+
+@{
+    ViewData["Title"] = "Budget";
+}
+
+<h3>@ViewData["Title"]</h3>
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post">
+            <div class="form-floating">
+                <input asp-for="Budget" class="form-control" />
+                <label asp-for="Budget" class="form-label"></label>
+            </div>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Edit Budget</button>
+        </form>
+    </div>
+</div>

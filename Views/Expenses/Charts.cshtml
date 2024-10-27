@@ -1,0 +1,91 @@
+﻿@model ExpenseTracker.Models.ChartViewModel
+@using ExpenseTracker.Models
+
+
+@{
+    ViewData["Title"] = "Charts";
+}
+
+<h3>@ViewData["Title"]</h3>
+@section Scripts{
+    <script src="~/js/ChartsView.js"></script>
+}
+
+<div class="container mt-5">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dateRangeModal">
+        Select Date Range
+    </button>
+    <div id="CurrentDateRange"></div>
+    @* Hidden BootStrap Modal *@
+    <div class="modal fade" id="dateRangeModal" tabindex="-1" aria-labelledby="dateRangeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dateRangeModalLabel">Select Date Range</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="dateRangeForm">
+                        <div class="form-group" id="customRange">
+                                <label for="startDate">Start Date</label>
+                                <input type="date" class="form-control" id="startDate" name="startDate">
+
+                                <label for="endDate">End Date</label>
+                                <input type="date" class="form-control" id="endDate" name="endDate">
+                        </div>
+                        <div class="form-group" id="yearRange" style="display: none;">
+                            <label for="yearSelect">Year</label>
+                            <select class="form-control" id="yearSelect" name="yearSelect">
+                                @{
+                                    foreach(int year in Model.AvailableYears)
+                                    {
+                                        <option value="@year">@year</option>
+                                    }
+                                }
+                               
+                            </select>
+                        </div>
+                        <div class="form-group" id="monthRange" style="display: none;">
+                            <label for="monthYearSelect">Year</label>
+                            <select class="form-control" id="monthYearSelect" name="monthYearSelect">
+                                @{
+                                    foreach (int year in Model.AvailableYears)
+                                    {
+                                        <option value="@year">@year</option>
+                                    }
+                                }
+                            </select>
+                            <label for="monthSelect">Month</label>
+                            <select class="form-control" id="monthSelect" name="monthSelect">
+                                @{
+                                    foreach(int month in Model.AvailableMonths)
+                                    {
+                                        <option value="@month">@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month)</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="rangeType">Range Type</label>
+                            <select class="form-control" id="rangeType" name="rangeType">
+                                <option value="custom">Custom</option>
+                                <option value="year">Year</option>
+                                <option value="month">Month</option>
+                                <option value="all">All</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="submitDateRange">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div id="ChartReports">
+    <partial name="_GeneratedCharts" model="Model" />
+</div>

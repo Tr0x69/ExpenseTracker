@@ -1,0 +1,57 @@
+﻿@model ExpenseTracker.Models.Data.ExpenseViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Expense</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="name" class="control-label">Name</label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="amount" class="control-label">Amount</label>
+                <input asp-for="amount" class="form-control" />
+                <span asp-validation-for="amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateTime" class="control-label">Date</label>
+                <input type="datetime-local" asp-for="DateTime" class="form-control" asp-format="{0:yyyy-MM-dd hh:mm}" value="@DateTime.Now.ToString("yyyy-MM-dd hh:mm")" />
+                <span asp-validation-for="DateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label">Category</label>
+                <select asp-for="CategoryID" class ="form-control" asp-items="ViewBag.CategoryID"></select>
+                <br />
+                <div>
+                     <a asp-action="NewCat" class="btn btn-secondary">Custom Category</a>           
+                </div>
+                  
+            </div>
+            <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" asp-for="recurring">
+                <label class="form-check-label" asp-for="recurring">Recurring</label><br>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
